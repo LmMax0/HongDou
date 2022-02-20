@@ -2,10 +2,12 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { VueLoaderPlugin } = require("vue-loader");
 const CopyPlugin  = require('copy-webpack-plugin');
+const { DefinePlugin } = require("webpack");
 
 module.exports = {
 
     mode: "development",
+    devtool: "source-map",
     entry: path.resolve(__dirname, "./src/main.js"),
     output: {
         path: path.resolve(__dirname, "dist"),
@@ -67,6 +69,11 @@ module.exports = {
                 { from: "src/media", to: "media" },
             ],
         }),
+        new DefinePlugin({
+            // BASE_URL: "'./'",
+            __VUE_OPTIONS_API__: true,
+            __VUE_PROD_DEVTOOLS__: false
+          }),
     ],
     devServer:{
         proxy: [

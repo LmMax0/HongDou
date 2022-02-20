@@ -1,0 +1,5 @@
+# Project exclude paths
+/myweb/dist/
+/myweb/node_modules/
+/out/
+/target/
