@@ -56,9 +56,7 @@ public class MyHandler extends TextWebSocketHandler {
 // 连接关闭后
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-
         System.out.println(session.getId()+ "————》 afterConnectionClosed()");
-
         // 关闭一个连接后应该干啥
         for (Map.Entry<String, WebSocketSession> entry : sessionUsers.entrySet()) {
             System.out.println(entry.getKey()+"----->"+entry.getValue().getId());

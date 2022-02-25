@@ -17,7 +17,6 @@ import java.util.Map;
 
 @Controller
 @CrossOrigin(origins = "http://101.35.55.105:8080")
-//@CrossOrigin(origins = "*")
 public class HelloController {
 
     @GetMapping("/test/t1")
