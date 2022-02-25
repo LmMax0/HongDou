@@ -1,0 +1,28 @@
+# 配置端口
+server:
+  port: 8080
+# 配置数据源
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3306/test_springboot
+    devtools:
+      restart:
+        enabled: true  #设置开启热部署
+        additional-paths: src/main/java #重启目录
+        exclude: WEB-INF/**
+
+mybatis:
+  mapper-locations: classpath:mappers/*.xml
+#  配置 mybatis-plus
+mybatis-plus:
+  global-config:
+    db-config:
+      table-underline: true
+  mapper-locations: classpath:mappers/*.xml
+  configuration:
+    cache-enabled: false
+    # 输出sql
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
