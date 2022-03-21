@@ -90,6 +90,11 @@ public class WebSocketService {
 //        System.out.println("to:"+to);
     }
 
+    /**
+     *  处理消息
+     * @param message 对方发送过来的消息
+     * @throws IOException
+     */
     @OnMessage
     public void handleMessage(String message) throws IOException {
 //        处理消息

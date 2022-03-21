@@ -29,7 +29,7 @@
             <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>
         <!--生成Model类存放位置-->
-        <javaModelGenerator targetPackage="com.lmdd.demo.pojo"
+        <javaModelGenerator targetPackage="com.lmdd.pojo"
                             targetProject="src/main/java">
             <!-- 是否允许子包，即targetPackage.schemaName.tableName -->
             <property name="enableSubPackages" value="true"/>
@@ -43,7 +43,7 @@
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
         <!--生成Dao类存放位置-->
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.lmdd.demo.dao"
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.lmdd.dao"
                              targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
