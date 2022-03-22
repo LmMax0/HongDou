@@ -19,7 +19,7 @@
         </commentGenerator>
         <!--数据库链接地址账号密码-->
         <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
-                        connectionURL="jdbc:mysql://127.0.0.1:3306/test_springboot?useUnicode=true&amp;characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/hongdou?useUnicode=true&amp;characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull"
                         userId="root"
                         password="123456">
             <property name="nullCatalogMeansCurrent" value="true"/>

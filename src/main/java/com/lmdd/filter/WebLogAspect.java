@@ -1,6 +1,8 @@
 package com.lmdd.filter;
 
-import com.alibaba.fastjson.JSON;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -53,8 +55,8 @@ public class WebLogAspect {
     }
 
     @AfterReturning(returning = "res" , pointcut = "webLog()")
-    public void doAfterReturning(Object res){
+    public void doAfterReturning(Object res) throws JsonProcessingException {
         // 处理完请求，返回内容 转成json字符串
-        log.info("RESPONSE : " + JSON.toJSONString(res));
+        log.info("RESPONSE : " + new ObjectMapper().writeValueAsString(res) );
     }
 }

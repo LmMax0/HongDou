@@ -1,26 +1,16 @@
 package com.lmdd.service;
 
-import com.alibaba.fastjson.JSON;
+//import com.alibaba.fastjson.JSON;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lmdd.pojo.Message;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.socket.CloseStatus;
-import org.springframework.web.socket.WebSocketSession;
-
-
-import javax.servlet.http.HttpServletRequest;
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -97,20 +87,22 @@ public class WebSocketService {
      */
     @OnMessage
     public void handleMessage(String message) throws IOException {
-//        处理消息
-        Message msg = JSON.parseObject(message, Message.class);
+        // 处理消息
+        //  Message msg = JSON.parseObject(message, Message.class);
+        ObjectMapper jackson = new ObjectMapper();
+        Message msg = jackson.readValue(message,Message.class);
         System.out.println(msg);
         msg.setDate(new Date());
         // 如果携带消息中to值为-1 表明当前为群发消息
         if (msg.getTo().equals("-1")) {
-            broadcast(JSON.toJSONString(msg,true));
-        } else {
+            broadcast(jackson.writeValueAsString(msg));
+        }else {
             // 给指定个体发送消息
-            sendInfo(msg.getTo(), JSON.toJSONString(msg,true));
+            sendInfo(msg.getTo(), jackson.writeValueAsString(msg));
         }
 
     }
-// 连接关闭后
+    // 连接关闭后
     @OnClose
     public void afterConnectionClosed(Session session,@PathParam(value = "username") String userName) throws Exception {
         sessionPools.remove(userName);

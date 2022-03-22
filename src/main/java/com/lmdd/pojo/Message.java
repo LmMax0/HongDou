@@ -1,6 +1,8 @@
 package com.lmdd.pojo;
 
-import com.alibaba.fastjson.annotation.JSONField;
+//import com.alibaba.fastjson.annotation.JSONField;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
 
@@ -25,7 +27,7 @@ public class Message {
     /**
      * 发送时间 JsonFormat json格式化输出时间
      */
-    @JSONField(format="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     public Date date;
 
     public String getFrom() {

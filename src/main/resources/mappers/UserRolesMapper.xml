@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lmdd.dao.UserRolesMapper">
+  <resultMap id="BaseResultMap" type="com.lmdd.pojo.login.UserRolesKey">
+    <id column="roles_id" jdbcType="INTEGER" property="rolesId" />
+    <id column="user_id" jdbcType="INTEGER" property="userId" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="com.lmdd.pojo.login.UserRolesKey">
+    delete from user_roles
+    where roles_id = #{rolesId,jdbcType=INTEGER}
+      and user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lmdd.pojo.login.UserRolesKey">
+    insert into user_roles (roles_id, user_id)
+    values (#{rolesId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lmdd.pojo.login.UserRolesKey">
+    insert into user_roles
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="rolesId != null">
+        roles_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="rolesId != null">
+        #{rolesId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lmdd.dao.UserMapper">
-  <resultMap id="BaseResultMap" type="com.lmdd.pojo.User">
+  <resultMap id="BaseResultMap" type="com.lmdd.pojo.login.User">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
     <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="status" jdbcType="INTEGER" property="status" />
     <result column="regist_time" jdbcType="TIMESTAMP" property="registTime" />
-    <result column="head_portrait" jdbcType="VARCHAR" property="headPortrait" />
+    <collection property="roles" select="com.lmdd.dao.RoleMapper.selectByUid" column="id"/>
   </resultMap>
   <sql id="Base_Column_List">
-    id, username, `password`, regist_time, head_portrait
+    id, username, nickname, `password`, `status`, regist_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -17,20 +19,23 @@
     from user
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <select id="selectByUsernameUser" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from user where username = #{username}
+  </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from user
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.lmdd.pojo.User">
+  <insert id="insert" parameterType="com.lmdd.pojo.login.User">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into user (username, `password`, regist_time, 
-      head_portrait)
-    values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{registTime,jdbcType=TIMESTAMP}, 
-      #{headPortrait,jdbcType=VARCHAR})
+    insert into user (username, nickname, `password`, 
+      `status`, regist_time)
+    values (#{username,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{registTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.lmdd.pojo.User">
+  <insert id="insertSelective" parameterType="com.lmdd.pojo.login.User">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -39,55 +44,65 @@
       <if test="username != null">
         username,
       </if>
+      <if test="nickname != null">
+        nickname,
+      </if>
       <if test="password != null">
         `password`,
       </if>
+      <if test="status != null">
+        `status`,
+      </if>
       <if test="registTime != null">
         regist_time,
-      </if>
-      <if test="headPortrait != null">
-        head_portrait,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="username != null">
         #{username,jdbcType=VARCHAR},
       </if>
+      <if test="nickname != null">
+        #{nickname,jdbcType=VARCHAR},
+      </if>
       <if test="password != null">
         #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
       </if>
       <if test="registTime != null">
         #{registTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="headPortrait != null">
-        #{headPortrait,jdbcType=VARCHAR},
-      </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.lmdd.pojo.User">
+  <update id="updateByPrimaryKeySelective" parameterType="com.lmdd.pojo.login.User">
     update user
     <set>
       <if test="username != null">
         username = #{username,jdbcType=VARCHAR},
       </if>
+      <if test="nickname != null">
+        nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
       <if test="password != null">
         `password` = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=INTEGER},
       </if>
       <if test="registTime != null">
         regist_time = #{registTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="headPortrait != null">
-        head_portrait = #{headPortrait,jdbcType=VARCHAR},
-      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.lmdd.pojo.User">
+  <update id="updateByPrimaryKey" parameterType="com.lmdd.pojo.login.User">
     update user
     set username = #{username,jdbcType=VARCHAR},
+      nickname = #{nickname,jdbcType=VARCHAR},
       `password` = #{password,jdbcType=VARCHAR},
-      regist_time = #{registTime,jdbcType=TIMESTAMP},
-      head_portrait = #{headPortrait,jdbcType=VARCHAR}
+      `status` = #{status,jdbcType=INTEGER},
+      regist_time = #{registTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

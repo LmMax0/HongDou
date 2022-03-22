@@ -10,7 +10,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: 123456
-    url: jdbc:mysql://localhost:3306/test_springboot
+    url: jdbc:mysql://localhost:3306/hongdou
     devtools:
       restart:
         enabled: true  #设置开启热部署
@@ -34,6 +34,13 @@ spring:
       static-locations:
         - "classpath:/static/"
         - "file:${app.video-folder}" # 把视频文件夹目录，添加到静态资源目录列表
+  ldap:
+    base: dc=com,dc=login,dc=demo
+    embedded:
+      base-dn: dc=com,dc=login,dc=demo
+      ldif: classpath:test-ldap-server.ldif
+      port: 8389
+    urls: ldap://localhost:8389/
 
 mybatis:
   mapper-locations: classpath:mappers/*.xml
@@ -47,3 +54,7 @@ mybatis-plus:
     cache-enabled: false
     # 输出sql
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+mooc:
+  jwt:
+    access-token-expire-time: 300000
+    refresh-token-expire-time: 2592000000
